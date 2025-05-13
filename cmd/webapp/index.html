@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Unit Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .tab {
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background: #f1f1f1;
+            margin-right: 5px;
+        }
+
+        .tab:hover {
+            background: #ddd;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .form-section {
+            display: block;
+        }
+
+        .result-section {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="assets/unitconverter.png" alt="Unit Converter Logo" class="logo">
+
+    <h1>Unit Converter</h1>
+
+    <div class="tabs">
+        <div class="tab" onclick="showTab('length')">📏 Length</div>
+        <div class="tab" onclick="showTab('weight')">⚖ Weight</div>
+        <div class="tab" onclick="showTab('temperature')">🌡 Temperature</div>
+    </div>
+
+    <div id="length" class="tab-content">
+        <h2>Length Converter</h2>
+        <div class="form-section">
+            <label for="lengthValue">Enter Value:</label>
+            <input type="number" id="lengthValue" placeholder="Enter value">
+            <select id="lengthFrom"></select>
+            <select id="lengthTo"></select>
+            <button onclick="convert('length')">Convert</button>
+        </div>
+        <div class="result-section">
+            <h3>Converted Value: <span id="lengthResult"></span></h3>
+            <button onclick="resetForm('length')">Reset</button>
+        </div>
+    </div>
+
+    <div id="weight" class="tab-content">
+        <h2>Weight Converter</h2>
+        <div class="form-section">
+            <label for="weightValue">Enter Value:</label>
+            <input type="number" id="weightValue" placeholder="Enter value">
+            <select id="weightFrom"></select>
+            <select id="weightTo"></select>
+            <button onclick="convert('weight')">Convert</button>
+        </div>
+        <div class="result-section">
+            <h3>Converted Value: <span id="weightResult"></span></h3>
+            <button onclick="resetForm('weight')">Reset</button>
+        </div>
+    </div>
+
+    <div id="temperature" class="tab-content">
+        <h2>Temperature Converter</h2>
+        <div class="form-section">
+            <label for="temperatureValue">Enter Value:</label>
+            <input type="number" id="temperatureValue" placeholder="Enter value">
+            <select id="temperatureFrom"></select>
+            <select id="temperatureTo"></select>
+            <button onclick="convert('temperature')">Convert</button>
+        </div>
+        <div class="result-section">
+            <h3>Converted Value: <span id="tempResult"></span></h3>
+            <button onclick="resetForm('temperature')">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        const units = {
+            length: ["millimeter", "centimeter", "meter", "kilometer", "inch", "foot", "yard", "mile"],
+            weight: ["milligram", "gram", "kilogram", "ounce", "pound"],
+            temperature: ["Celsius", "Fahrenheit", "Kelvin"]
+        };
+
+        function populateUnits(category) {
+            console.log(`Cargando unidades para: ${category}`);
+            let fromSelect = document.getElementById(category + "From");
+            let toSelect = document.getElementById(category + "To");
+
+            fromSelect.innerHTML = ""; // Limpia el contenido antes de añadir opciones
+            toSelect.innerHTML = "";
+
+            units[category].forEach(unit => {
+                fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+                toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+
+        }
+
+        function convert(category) {
+            let inputElement = document.getElementById(category + "Value");
+            console.log(`Buscando ID: ${category + "Value"}`); // Verifica qué ID está usando
+
+            if (!inputElement) {
+                console.error(`Error: No se encontró el elemento de entrada con ID "${category + 'Value'}"`);
+                return;
+            }
+
+            let value = inputElement.value;
+            console.log(`Valor ingresado: ${value}`);
+
+
+            //let value = document.getElementById(category + "Value").value;
+
+            let fromUnit = document.getElementById(category + "From").value;
+            let toUnit = document.getElementById(category + "To").value;
+
+            console.log(`Convirtiendo ${value} de ${fromUnit} a ${toUnit}`);
+
+            fetch(`/convert?value=${value}&fromUnit=${fromUnit}&toUnit=${toUnit}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById(category + "Result").innerText = data.result;
+
+                    // Ocultar formulario y mostrar resultado
+                    document.querySelector(`#${category} .form-section`).style.display = "none";
+                    document.querySelector(`#${category} .result-section`).style.display = "block";
+                });
+        }
+
+        function resetForm(category) {
+            document.getElementById(category + "Value").value = "";
+            document.getElementById(category + "From").selectedIndex = 0;
+            document.getElementById(category + "To").selectedIndex = 0;
+
+            // Mostrar formulario y ocultar resultado
+            document.querySelector(`#${category} .form-section`).style.display = "block";
+            document.querySelector(`#${category} .result-section`).style.display = "none";
+        }
+
+        function showTab(category) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(category).classList.add('active');
+        }
+
+        window.onload = () => {
+            populateUnits("length");
+            populateUnits("weight");
+            populateUnits("temperature");
+            showTab("length"); // Mostrar pestaña inicial
+        };
+    </script>
+
+</body>
+
+</html>

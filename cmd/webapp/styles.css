@@ -1,0 +1,158 @@
+/* Estilo global */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Título */
+h1 {
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de pestañas */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 15px 25px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: rgb(10, 10, 10);
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.tab:hover,
+.tab.active {
+    border: 2px solid #0056b3;
+    background: linear-gradient(135deg, #0056b3, #003d7c);
+}
+
+/* Contenido de las pestañas */
+.tab-content {
+    display: none;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    margin: auto;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Estilo del formulario */
+.form-section {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Alinea los elementos horizontalmente */
+    gap: 10px;
+    /* Espacio entre los elementos */
+}
+
+/* Etiquetas */
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Campos de entrada y selección */
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9f9f9;
+    transition: 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Botón de conversión */
+button {
+    padding: 12px;
+    width: 100%;
+    border: none;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0056b3, #003d7c);
+}
+
+/* Sección de resultados */
+.result-section {
+    display: none;
+    background: #e3f2fd;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0056b3;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de reset */
+.result-section button {
+    margin-top: 10px;
+    background: #dc3545;
+}
+
+.result-section button:hover {
+    background: #b02a37;
+}
+
+.logo {
+    width: 400px;
+    /* Ajusta el tamaño según lo que necesites */
+    height: auto;
+    /* Mantiene la proporción */
+}
+
+input,
+select {
+    width: 100%;
+    max-width: 250px;
+    /* Puedes ajustar este valor según lo que necesites */
+    padding: 10px;
+}
